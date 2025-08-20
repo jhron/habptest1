@@ -1,0 +1,280 @@
+blueprint:
+  name: VW ID.Buzz Camping Mode Control
+  description: >
+    Automatic camping mode control for VW ID.Buzz vehicle climate system.
+    Starts climate at set time if battery level is sufficient, stops on low battery,
+    and restarts after delay.
+    
+    **Required entities before import:**
+    - Vehicle battery level sensor
+    - Climate control switch/device
+    - Input datetime helpers for start/end times
+    - Input boolean helpers for mode control
+    - Input number helpers for battery limit and delay
+    - Timer helper for delay control
+  domain: automation
+  author: "VW Camping Blueprint"
+  homeassistant:
+    min_version: "2025.6"
+  source_url: "https://github.com/jhron/habptest1"
+  input:
+    # Vehicle sensors and controls
+    vehicle_config:
+      name: "🚙 Vehicle Configuration"
+      description: "Configure your VW ID.Buzz sensors and climate control"
+      icon: mdi:car-electric
+      collapsed: false
+      input:
+        battery_sensor:
+          name: Battery Level Sensor
+          description: "Sensor reporting vehicle battery level in %"
+          selector:
+            entity:
+              filter:
+                - domain: sensor
+        climate_device_id:
+          name: Climate Control Device ID
+          description: "Device ID for climate control (from original automation)"
+          selector:
+            text:
+        climate_entity_id:
+          name: Climate Control Entity ID
+          description: "Entity ID for climate control switch (from original automation)"
+          selector:
+            text:
+
+    # Time configuration
+    time_config:
+      name: "⏰ Time Settings"
+      description: "Configure start and end times for camping mode"
+      icon: mdi:clock-outline
+      collapsed: false
+      input:
+        start_time:
+          name: Start Time Helper
+          description: "Input datetime for automatic climate start time"
+          selector:
+            entity:
+              filter:
+                domain: input_datetime
+        end_time:
+          name: End Time Helper
+          description: "Input datetime for automatic climate end time"
+          selector:
+            entity:
+              filter:
+                domain: input_datetime
+
+    # Boolean controls
+    boolean_config:
+      name: "🔘 Boolean Controls"
+      description: "Input boolean helpers for mode control"
+      icon: mdi:toggle-switch
+      collapsed: true
+      input:
+        auto_camping_mode:
+          name: Automatic Camping Mode
+          description: "Boolean to enable/disable automatic camping mode"
+          selector:
+            entity:
+              filter:
+                domain: input_boolean
+        camping_mode_active:
+          name: Camping Mode Active
+          description: "Boolean indicating active camping mode"
+          selector:
+            entity:
+              filter:
+                domain: input_boolean
+        auto_end_mode:
+          name: Automatic End Mode
+          description: "Boolean for automatic climate end control"
+          selector:
+            entity:
+              filter:
+                domain: input_boolean
+
+    # Number settings
+    number_config:
+      name: "🔢 Number Settings"
+      description: "Configure battery limits and delay settings"
+      icon: mdi:numeric
+      collapsed: true
+      input:
+        battery_limit:
+          name: Battery Limit
+          description: "Input number for minimum battery level (%)"
+          selector:
+            entity:
+              filter:
+                domain: input_number
+        delay_minutes:
+          name: Delay Minutes
+          description: "Input number for restart delay in minutes"
+          selector:
+            entity:
+              filter:
+                domain: input_number
+
+    # Timer configuration
+    timer_config:
+      name: "⏲️ Timer Configuration"
+      description: "Timer helper for camping mode delay"
+      icon: mdi:timer-outline
+      collapsed: true
+      input:
+        delay_timer:
+          name: Delay Timer
+          description: "Timer helper for camping mode delay control"
+          selector:
+            entity:
+              filter:
+                domain: timer
+
+triggers:
+  - trigger: time
+    at: !input start_time
+    id: timeStart
+  - trigger: time
+    at: !input end_time
+    id: timeEnd
+  - trigger: state
+    entity_id:
+      - !input battery_sensor
+    id: batteryLevel
+  - type: turned_off
+    device_id: !input climate_device_id
+    entity_id: !input climate_entity_id
+    domain: switch
+    trigger: device
+    id: climatisationOff
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: !input delay_timer
+    id: timerFinished
+
+conditions: []
+
+actions:
+  - choose:
+      # Start time trigger - turn on climate if conditions are met
+      - conditions:
+          - condition: trigger
+            id:
+              - timeStart
+          - condition: state
+            entity_id: !input auto_camping_mode
+            state: "on"
+          - condition: template
+            value_template: |-
+              {{ states(battery_limit) | float <
+                states(battery_sensor) | float }}
+        sequence:
+          - action: input_boolean.turn_on
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input camping_mode_active
+          - type: turn_on
+            device_id: !input climate_device_id
+            entity_id: !input climate_entity_id
+            domain: switch
+
+      # End time trigger - turn off climate and reset modes
+      - conditions:
+          - condition: trigger
+            id:
+              - timeEnd
+          - condition: state
+            entity_id: !input auto_end_mode
+            state: "on"
+        sequence:
+          - action: input_boolean.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - !input camping_mode_active
+                - !input auto_camping_mode
+                - !input auto_end_mode
+          - type: turn_off
+            device_id: !input climate_device_id
+            entity_id: !input climate_entity_id
+            domain: switch
+          - action: timer.finish
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input delay_timer
+
+      # Battery level trigger - turn off when battery is low
+      - conditions:
+          - condition: trigger
+            id:
+              - batteryLevel
+          - condition: state
+            entity_id: !input camping_mode_active
+            state: "on"
+          - condition: template
+            value_template: |-
+              {{ states(battery_limit) | float >=
+                states(battery_sensor) | float }}
+        sequence:
+          - action: input_boolean.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - !input auto_camping_mode
+                - !input auto_end_mode
+                - !input camping_mode_active
+          - action: timer.finish
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input delay_timer
+          - type: turn_off
+            device_id: !input climate_device_id
+            entity_id: !input climate_entity_id
+            domain: switch
+
+      # Climate turned off manually - start delay timer if conditions are met
+      - conditions:
+          - condition: trigger
+            id:
+              - climatisationOff
+          - condition: state
+            entity_id: !input camping_mode_active
+            state: "on"
+          - condition: template
+            value_template: >-
+              {{ states(battery_limit) | float <
+              states(battery_sensor) | float }}
+        sequence:
+          - action: timer.start
+            metadata: {}
+            data:
+              duration: "{{ states(delay_minutes) | int(0) * 60 }}"
+            target:
+              entity_id: !input delay_timer
+
+      # Timer finished - restart climate if conditions are still met
+      - conditions:
+          - condition: trigger
+            id:
+              - timerFinished
+          - condition: state
+            entity_id: !input camping_mode_active
+            state: "on"
+          - condition: template
+            value_template: >-
+              {{ states(battery_limit) | float <
+              states(battery_sensor) | float }}
+        sequence:
+          - type: turn_on
+            device_id: !input climate_device_id
+            entity_id: !input climate_entity_id
+            domain: switch
+
+mode: single
