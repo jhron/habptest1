@@ -9,7 +9,11 @@ Home Assistant blueprint for automatic climate control in VW ID.Buzz vehicles du
 
 ## 🔧 Required Entities
 
-Before importing this blueprint, create these helper entities in Home Assistant:
+### Method 1: UI Creation (Recommended)
+Go to **Settings** → **Devices & Services** → **Helpers** and create:
+
+### Method 2: YAML Configuration  
+Add to your `configuration.yaml`:
 
 ### Input DateTime Helpers
 ```yaml
@@ -72,12 +76,23 @@ timer:
 
 ## 📥 Installation
 
-1. Copy the required helper entities to your `configuration.yaml` or create them manually over the UI.
-2. Restart Home Assistant to load the helpers
-3. Import the blueprint:
-   - Go to **Settings** → **Automations & Scenes** → **Blueprints**
-   - Click **Import Blueprint**
-   - Enter the blueprint URL or copy the content from `blueprint.yaml`
+### Step 1: Create Helper Entities
+**⚠️ THIS IS CRITICAL!** Create all required helper entities first (see above section).
+
+### Step 2: Restart Home Assistant
+Restart HA after creating helpers in configuration.yaml.
+
+### Step 3: Import Blueprint
+1. Go to **Settings** → **Automations & Scenes** → **Blueprints**
+2. Click **Import Blueprint**  
+3. Enter the blueprint URL: `https://github.com/jhron/habptest1`
+4. Or copy the content from `blueprint.yaml`
+
+### Step 4: Create Automation
+1. Click **Create Automation** 
+2. Configure all required entities
+3. Set your preferred times and battery limits
+4. Save and test!
 
 ## 🔄 How It Works
 

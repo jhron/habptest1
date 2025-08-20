@@ -1,17 +1,25 @@
 blueprint:
   name: VW ID.Buzz Camping Mode Control
+  version: "1.0.0"
   description: >
     Automatic camping mode control for VW ID.Buzz vehicle climate system.
     Starts climate at set time if battery level is sufficient, stops on low battery,
     and restarts after delay.
     
     **Required entities before import:**
+    Create the required helper entities first! See detailed instructions:
+    👉 https://github.com/jhron/habptest1#required-entities
+    
+    Required helpers:
     - Vehicle battery level sensor
-    - Climate control switch/device
+    - Climate control switch/device  
     - Input datetime helpers for start/end times
     - Input boolean helpers for mode control
     - Input number helpers for battery limit and delay
     - Timer helper for delay control
+    
+    **Version:** 1.0.0
+    **Minimum HA:** 2024.6.0 (for input sections support)
   domain: automation
   author: "VW Camping Blueprint"
   homeassistant:
