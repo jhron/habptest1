@@ -30,10 +30,24 @@ Home Assistant (HA) blueprint for automatic climate control in Volkswagen vehicl
 
 ## 🔧 Creation of Helper Entities
 
-### Step 1: UI Creation (Recommended)
-Go to **Settings** → **Devices & Services** → **Helpers** and create:
+### Option 1: Navigate to HA helpers entities page 
+Pres button below to be redirected to your HA instance
+[![Open your Home Assistant instance and show your helper entities.](https://my.home-assistant.io/badges/helpers.svg)](https://my.home-assistant.io/redirect/helpers/)
+or go to **Settings** → **Devices & Services** → **Helpers**.
 
-### Step 2: YAML Configuration  
+Add to your Helpers:
+1. Camping Start Time
+   - Type: Datum a/nebo čas (Need EN name)
+   - Name: Camping Start Time
+   - Co chcete zadat: Čas (Need EN name)
+2. Camping End Time
+   - Type: Datum a/nebo čas (Need EN name)
+   - Name: Camping End Time
+   - Co chcete zadat: Čas (Need EN name)
+3. Auto Camping Mode
+   - TODO: Finish rest of them
+
+### Option 2: Create helpers from YAML Configurations 
 Add to your `configuration.yaml`:
 
 ### Input DateTime Helpers
