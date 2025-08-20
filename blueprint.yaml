@@ -44,6 +44,7 @@ blueprint:
               filter:
                 - domain: sensor
                   device_class: battery
+                  integration: volkswagencarnet
         climate_device_id:
           name: Climate Control Device ID
           description: "VW ID.Buzz device from Car-Net integration (select your vehicle device)"
@@ -58,7 +59,9 @@ blueprint:
             entity:
               filter:
                 - domain: switch
+                  integration: volkswagencarnet
                 - domain: climate
+                  integration: volkswagencarnet
 
     # Time configuration
     time_config:

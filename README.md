@@ -89,10 +89,10 @@ timer:
 
 ### Step 7: Create Automation
 1. Click **Create Automation** from the imported blueprint
-2. **Configure vehicle entities** (from VW Car-Net):
-   - Battery sensor: `sensor.id_buzz_battery_level` 
-   - Climate device: Select your VW ID.Buzz device
-   - Climate entity: `switch.id_buzz_climatisation`
+2. **Configure vehicle entities** (selectors will show only VW Car-Net entities):
+   - **Battery sensor**: Blueprint will show only VW battery sensors
+   - **Climate device**: Select your VW ID.Buzz device from VW integration
+   - **Climate entity**: Blueprint will show only VW climate controls
 3. **Configure helper entities** (created in Step 5)
 4. Set your preferred times and battery limits
 5. Save and test!
