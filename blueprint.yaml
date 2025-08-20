@@ -90,22 +90,22 @@ blueprint:
       collapsed: true
       input:
         auto_camping_mode:
-          name: Automatic Camping Mode
+          name: Auto Camping Mode
           description: "Boolean to enable/disable automatic camping mode"
           selector:
             entity:
               filter:
                 domain: input_boolean
-        camping_mode_active:
-          name: Camping Mode Active
-          description: "Boolean indicating active camping mode"
+        auto_start_mode:
+          name: Auto Start Mode
+          description: "Boolean to enable automatic climate start at scheduled time"
           selector:
             entity:
               filter:
                 domain: input_boolean
         auto_end_mode:
-          name: Automatic End Mode
-          description: "Boolean for automatic climate end control"
+          name: Auto End Mode
+          description: "Boolean to enable automatic climate end at scheduled time"
           selector:
             entity:
               filter:
@@ -192,7 +192,7 @@ actions:
             metadata: {}
             data: {}
             target:
-              entity_id: !input camping_mode_active
+              entity_id: !input auto_start_mode
           - type: turn_on
             device_id: !input climate_device_id
             entity_id: !input climate_entity_id
@@ -212,7 +212,7 @@ actions:
             data: {}
             target:
               entity_id:
-                - !input camping_mode_active
+                - !input auto_start_mode
                 - !input auto_camping_mode
                 - !input auto_end_mode
           - type: turn_off
@@ -231,7 +231,7 @@ actions:
             id:
               - batteryLevel
           - condition: state
-            entity_id: !input camping_mode_active
+            entity_id: !input auto_start_mode
             state: "on"
           - condition: template
             value_template: |-
@@ -245,7 +245,7 @@ actions:
               entity_id:
                 - !input auto_camping_mode
                 - !input auto_end_mode
-                - !input camping_mode_active
+                - !input auto_start_mode
           - action: timer.finish
             metadata: {}
             data: {}
@@ -262,7 +262,7 @@ actions:
             id:
               - climatisationOff
           - condition: state
-            entity_id: !input camping_mode_active
+            entity_id: !input auto_start_mode
             state: "on"
           - condition: template
             value_template: >-
@@ -282,7 +282,7 @@ actions:
             id:
               - timerFinished
           - condition: state
-            entity_id: !input camping_mode_active
+            entity_id: !input auto_start_mode
             state: "on"
           - condition: template
             value_template: >-

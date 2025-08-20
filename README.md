@@ -39,8 +39,8 @@ input_boolean:
     name: "Auto Camping Mode"
     icon: mdi:air-conditioner
     
-  camping_mode_active:
-    name: "Camping Mode Active"
+  auto_start_mode:
+    name: "Auto Start Mode"  
     icon: mdi:clock-start
     
   auto_end_mode:
@@ -112,11 +112,11 @@ timer:
 
 ## 🔄 How It Works
 
-1. **Start Time**: Climate automatically starts at configured time if battery is sufficient and mode is active
-2. **End Time**: Climate stops at configured end time if automatic off switch is enabled
+1. **Start Time**: Climate automatically starts at configured time if battery is sufficient and auto start mode is enabled
+2. **End Time**: Climate stops at configured end time if auto end mode is enabled  
 3. **Battery Protection**: Climate stops immediately if battery drops to the battery limit
-4. **Manual Override**: If climate is turned off manually or automatically after 30 min, it restarts after delay
-5. **Smart Recovery**: After delay, climate restarts if conditions are still met
+4. **Manual Override**: If climate is turned off manually, it restarts after delay if auto start mode is still active
+5. **Smart Recovery**: After delay, climate restarts if conditions are still met and auto start mode is active
 
 ## 📝 License
 
