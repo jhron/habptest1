@@ -9,6 +9,9 @@ Home Assistant blueprint for automatic climate control in VW ID.Buzz vehicles du
 
 ## 🔧 Required Entities
 
+**⚠️ ONLY import Blueprint AFTER VW Car-Net integration is working! and all helper entities are created!**
+**🔗 VW Integration required:** https://github.com/robinostlund/homeassistant-volkswagencarnet
+
 ### Method 1: UI Creation (Recommended)
 Go to **Settings** → **Devices & Services** → **Helpers** and create:
 
@@ -74,25 +77,38 @@ timer:
     icon: mdi:timer-sand
 ```
 
-## 📥 Installation
+## 📥 Blueprint Installation
 
-### Step 1: Create Helper Entities
-**⚠️ THIS IS CRITICAL!** Create all required helper entities first (see above section).
+### Step 6: Import Blueprint
+**⚠️ Complete Steps 1-5 first! VW Car-Net MUST be working!**
 
-### Step 2: Restart Home Assistant
-Restart HA after creating helpers in configuration.yaml.
-
-### Step 3: Import Blueprint
 1. Go to **Settings** → **Automations & Scenes** → **Blueprints**
 2. Click **Import Blueprint**  
 3. Enter the blueprint URL: `https://github.com/jhron/habptest1`
 4. Or copy the content from `blueprint.yaml`
 
-### Step 4: Create Automation
-1. Click **Create Automation** 
-2. Configure all required entities
-3. Set your preferred times and battery limits
-4. Save and test!
+### Step 7: Create Automation
+1. Click **Create Automation** from the imported blueprint
+2. **Configure vehicle entities** (from VW Car-Net):
+   - Battery sensor: `sensor.id_buzz_battery_level` 
+   - Climate device: Select your VW ID.Buzz device
+   - Climate entity: `switch.id_buzz_climatisation`
+3. **Configure helper entities** (created in Step 5)
+4. Set your preferred times and battery limits
+5. Save and test!
+
+## 🔍 Troubleshooting
+
+### VW Car-Net Integration Issues:
+- **No entities**: Check VW account credentials
+- **Authentication failed**: Try re-entering password
+- **Entities unavailable**: Vehicle might be sleeping, try remote unlock
+- **Climate not working**: Check if climatisation is available in VW app
+
+### Blueprint Issues:
+- **Import fails**: Verify all helper entities exist
+- **Automation not triggering**: Check entity states in Developer Tools
+- **Climate not starting**: Verify VW integration entities are working
 
 ## 🔄 How It Works
 

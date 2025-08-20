@@ -7,13 +7,18 @@ blueprint:
     
     **Version:** 1.0.0 | **Minimum HA:** 2024.6.0
     
-    **Required entities before import:**
-    Create the required helper entities first! See detailed instructions:
-    👉 https://github.com/jhron/habptest1#required-entities
+    ⚠️ **CRITICAL REQUIREMENT:**
+    This blueprint requires Volkswagen Car-Net integration installed via HACS!
+    Install first: https://github.com/robinostlund/homeassistant-volkswagencarnet
+    
+    **Required before import:**
+    1. 🚗 Install & configure VW Car-Net integration (HACS)
+    2. 🔧 Create required helper entities (see documentation)
+    3. 📖 Full setup guide: https://github.com/jhron/habptest1#required-entities
     
     Required helpers:
-    - Vehicle battery level sensor
-    - Climate control switch/device  
+    - Vehicle battery level sensor (from VW Car-Net)
+    - Climate control switch/device (from VW Car-Net)
     - Input datetime helpers for start/end times
     - Input boolean helpers for mode control
     - Input number helpers for battery limit and delay
@@ -33,21 +38,27 @@ blueprint:
       input:
         battery_sensor:
           name: Battery Level Sensor
-          description: "Sensor reporting vehicle battery level in %"
+          description: "Vehicle battery level sensor from VW Car-Net integration (e.g., sensor.id_buzz_battery_level)"
           selector:
             entity:
               filter:
                 - domain: sensor
+                  device_class: battery
         climate_device_id:
           name: Climate Control Device ID
-          description: "Device ID for climate control (from original automation)"
+          description: "VW ID.Buzz device from Car-Net integration (select your vehicle device)"
           selector:
-            text:
+            device:
+              filter:
+                - integration: volkswagencarnet
         climate_entity_id:
           name: Climate Control Entity ID
-          description: "Entity ID for climate control switch (from original automation)"
+          description: "Climate control switch from VW Car-Net (e.g., switch.id_buzz_climatisation)"
           selector:
-            text:
+            entity:
+              filter:
+                - domain: switch
+                - domain: climate
 
     # Time configuration
     time_config:
