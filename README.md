@@ -12,6 +12,8 @@ Home Assistant blueprint for automatic climate control in VW ID.Buzz vehicles du
 **⚠️ ONLY import Blueprint AFTER VW Car-Net integration is working! and all helper entities are created!**
 **🔗 VW Integration required:** https://github.com/robinostlund/homeassistant-volkswagencarnet
 
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fjhron%2Fhabptest1%2Ftree%2Fmain)
+
 ### Method 1: UI Creation (Recommended)
 Go to **Settings** → **Devices & Services** → **Helpers** and create:
 
