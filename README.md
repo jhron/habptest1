@@ -1,23 +1,39 @@
-# VW ID.Buzz Camping Mode Blueprint
+# VW Camping Mode Blueprint for Home Assistant
+[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/petr-bartusek/habptest1/blob/master/README.md)
+[![cz](https://img.shields.io/badge/lang-cs-green.svg)](https://github.com/petr-bartusek/habptest1/blob/master/README.cs.md)
 
-Home Assistant blueprint for automatic climate control in VW ID.Buzz vehicles during camping.
+_Read this in other languages:_ [Czech](https://github.com/petr-bartusek/habptest1/blob/master/README.cs.md)
+Home Assistant (HA) blueprint for automatic climate control in Volkswagen vehicles during camping.
 
 ## 🚀 Features
 
+- ✅ **Car Climate Control**: 
 - ✅ **Smart Battery Management**: Automatic climate control based on battery level
 - ✅ **Automatic Restart**: Automatic restart after climate shutoff with configurable delay
 
-## 🔧 Required Entities
+## Requirements 
 
-**⚠️ ONLY import Blueprint AFTER VW Car-Net integration is working! and all helper entities are created!**
-**🔗 VW Integration required:** https://github.com/robinostlund/homeassistant-volkswagencarnet
+- Supported VW Car (ID.Buzz, ID.3, ID.4, ID.5, ID.7 with ID Software 3.X or newer are supported, but for other models as Passat, Golf, e-Golf, Tiguan, etc. it could be work as well).
+- Created [MyVolkswagen/Wolkswagen ID account](https://www.myvolkswagen.net/cz/cs/myvolkswagen.html) and activated [VW Connect service](https://www.volkswagen.cz/technologie/konektivita/vw-connect) in your car.
+- Created [GitHub Account](https://github.com/) (required by HACS).
+- Home Assistant instalation supporting Add-ons innstalation [HA Documentation](https://www.home-assistant.io/installation/).
+- Home Assistant 2024.6.0 or newer.
 
-[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fjhron%2Fhabptest1%2Fblob%2Fmain%2Fblueprint.yaml)
+## Instalation Overview
 
-### Method 1: UI Creation (Recommended)
+1. Install and configure HACS to your Home Assistant [GUIDE](https://hacs.xyz/docs/use/).
+1. Install [Volkswagen Connect](https://github.com/robinostlund/homeassistant-volkswagencarnet?tab=readme-ov-file#install-with-hacs-recommended) component from HACS dashboard.
+1. Configure Volkswagen Connect component and sign by your MyVolkswagen/Wolkswagen ID account.
+1. Manually create required HA helper entities (TODO: Link lower to chapter).
+1. Import of HA Blueprint for Camping mode UI (TODO: Link lower to chapter).
+1. Automation creation
+
+## 🔧 Creation of Helper Entities
+
+### Step 1: UI Creation (Recommended)
 Go to **Settings** → **Devices & Services** → **Helpers** and create:
 
-### Method 2: YAML Configuration  
+### Step 2: YAML Configuration  
 Add to your `configuration.yaml`:
 
 ### Input DateTime Helpers
@@ -82,7 +98,11 @@ timer:
 ## 📥 Blueprint Installation
 
 ### Step 6: Import Blueprint
-**⚠️ Complete Steps 1-5 first! VW Car-Net MUST be working!**
+
+**⚠️ ONLY import Blueprint AFTER Volkswagen Connect integration from HACS is working! and all helper entities are created!**
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fjhron%2Fhabptest1%2Fblob%2Fmain%2Fblueprint.yaml)
+
+**⚠️ Complete Steps 1-4 from instalation first! Volkswagen Connect MUST be working!**
 
 1. Go to **Settings** → **Automations & Scenes** → **Blueprints**
 2. Click **Import Blueprint**  
