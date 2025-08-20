@@ -15,7 +15,7 @@ blueprint:
   domain: automation
   author: "VW Camping Blueprint"
   homeassistant:
-    min_version: "2025.6.0"
+    min_version: "2024.6.0"
   source_url: "https://github.com/jhron/habptest1"
   input:
     # Vehicle sensors and controls
