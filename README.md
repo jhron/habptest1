@@ -30,12 +30,14 @@ Home Assistant (HA) blueprint for automatic climate control in Volkswagen vehicl
 
 ## 🔧 Creation of Helper Entities
 
-### Option 1: Navigate to HA helpers entities page 
+### Step 1: Navigate to HA helpers entities page 
 Pres button below to be redirected to your HA instance
 [![Open your Home Assistant instance and show your helper entities.](https://my.home-assistant.io/badges/helpers.svg)](https://my.home-assistant.io/redirect/helpers/)
 or go to **Settings** → **Devices & Services** → **Helpers**.
 
-Add to your Helpers:
+### Step 2 - Option 1: Create helpers from manually
+
+**Add these eight helpers:**
 1. Camping Start Time
    - Type: Datum a/nebo čas (Need EN name)
    - Name: Camping Start Time
@@ -45,7 +47,38 @@ Add to your Helpers:
    - Name: Camping End Time
    - Co chcete zadat: Čas (Need EN name)
 3. Auto Camping Mode
-   - TODO: Finish rest of them
+   - Type: Přepínač
+   - Name: Auto Camping Mode
+   - Icon: mdi:air-conditioner
+4. Auto Start Mode
+   - Type: Přepínač
+   - Name: Auto Camping Mode
+   - Icon: mdi:clock-start
+5. Auto End Mode
+   - Type: Přepínač
+   - Name: Auto End Mode
+   - Icon: mdi:clock-end
+6. Battery Limit
+   - Type: Číslo
+   - Name: Battery Limit
+   - Icon: mdi:battery-50
+   - Minimální hodnota: 20
+   - Maximální hodnota: 80
+   - Velikost kroku: 5
+   - Měrná jednotka: %
+7. xxx
+   - Type: Číslo
+   - Name: xxx
+   - Icon: mdi:timer
+   - Minimální hodnota: 15
+   - Maximální hodnota: 120
+   - Velikost kroku: 15
+   - Měrná jednotka: min
+8. Camping Delay Timer
+   - Type: Časovač
+   - Name: Camping Delay Timer
+   - Icon: mdi:timer
+   - Co chcete zadat: 0:00:00
 
 ### Option 2: Create helpers from YAML Configurations 
 Add to your `configuration.yaml`:
@@ -91,7 +124,7 @@ input_number:
     unit_of_measurement: "%"
     icon: mdi:battery-50
     
-  delay_minutes:
+  restart_delay:
     name: "Restart Delay"
     min: 15
     max: 120
@@ -103,7 +136,7 @@ input_number:
 ### Timer Helper
 ```yaml
 timer:
-  camping_delay:
+  camping_delay_timer:
     name: "Camping Delay Timer"
     duration: "00:00:00"
     icon: mdi:timer-sand
