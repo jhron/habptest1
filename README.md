@@ -26,7 +26,9 @@ Home Assistant (HA) blueprint for automatic climate control in Volkswagen vehicl
 1. Configure Volkswagen Connect component and sign by your MyVolkswagen/Wolkswagen ID account.
 1. Manually create required HA helper entities (TODO: Link lower to chapter).
 1. Import of HA Blueprint for Camping mode UI (TODO: Link lower to chapter).
-1. Automation creation
+1. Create Automation
+2. (Optional) Install Lovelace card from HACS
+3. (Optional) Import Dashboard
 
 ## 🔧 Creation of Helper Entities
 
@@ -147,7 +149,7 @@ timer:
 ### Step 6: Import Blueprint
 
 **⚠️ ONLY import Blueprint AFTER Volkswagen Connect integration from HACS is working! and all helper entities are created!**
-[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fjhron%2Fhabptest1%2Fblob%2Fmain%2Fblueprint.yaml)
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https://github.com/petr-bartusek/habptest1/blob/documentation-update/blueprint.yaml)
 
 **⚠️ Complete Steps 1-4 from instalation first! Volkswagen Connect MUST be working!**
 
