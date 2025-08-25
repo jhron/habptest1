@@ -168,6 +168,13 @@ timer:
 4. Set your preferred times and battery limits
 5. Save and test!
 
+### Step 7: Create HA Dashboard
+
+**TODO: Complete and rewrite**
+1. Install **card-mod 3** (https://github.com/thomasloven/lovelace-card-mod) from HACS
+2. Add HA dashboard by copying content of dashboard yaml into new dashboard in **Code editor setting** 
+
+
 ## 🔍 Troubleshooting
 
 ### VW Car-Net Integration Issues:
