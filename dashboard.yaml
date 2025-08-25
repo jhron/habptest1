@@ -1,0 +1,107 @@
+views:
+  - title: Info
+    sections:
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: input_boolean.auto_camping_mode
+              - entity: input_number.restart_delay
+                name: Delay
+                secondary_info: none
+              - entity: number.id_buzz_climatisation_target_temperature
+                name: Temperature
+              - entity: timer.camping_delay_timer
+                name: Next start in
+              - entity: switch.id_buzz_electric_climatisation
+                name: Air condition
+              - entity: sensor.id_buzz_electric_remaining_climatisation_time
+                name: Remaining
+              - entity: sensor.id_buzz_last_data_refresh
+                name: Last updated
+            title: Camping mode
+            show_header_toggle: false
+            card_mod:
+              style: |
+                .card-header {
+                  font-weight: bold; 
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                .card-header .name {
+                  display: flex;
+                  align-items: center;
+                }
+                .card-header div.name::before {
+                  content: "";
+                  display: inline-block;
+                  height: 44px;
+                  aspect-ratio: 218/134;
+                  background-image: url('/local/Buzz.png');
+                  background-size: cover;
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  margin-right: 10px;
+                  flex-shrink: 0;
+                }
+                .card-content {
+                  padding-bottom: 0px;
+                }
+                .card-content > div {
+                  margin: 4px !important;
+                }
+        column_span: 1
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: input_boolean.auto_start_mode
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.auto_start_mode
+                    state: 'on'
+                row:
+                  entity: input_datetime.camping_start_time
+              - entity: input_boolean.auto_end_mode
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.auto_end_mode
+                    state: 'on'
+                row:
+                  entity: input_datetime.camping_end_time
+              - entity: input_number.battery_limit
+                name: Battery limit
+              - entity: sensor.id_buzz_battery_level
+                name: Actual battery level
+            title: FOX.CZ
+            show_header_toggle: false
+            card_mod:
+              style: |
+                .card-header {
+                  color: red;        
+                  font-weight: bold;
+                  font-size: 3em;
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                  justify-content: center !important;
+                  line-height: normal;
+                }
+                .card-content {
+                  padding-bottom: 0px
+                }
+                .card-content > div {
+                  margin: 4px !important;
+                }
+    type: sections
+    max_columns: 4
+    cards: []
+    header:
+      layout: responsive
+      badges_position: bottom
+      badges_wrap: wrap
+    background:
+      opacity: 80
+      alignment: bottom center
+      size: auto
+      repeat: repeat
+      attachment: scroll

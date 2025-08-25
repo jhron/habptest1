@@ -70,14 +70,14 @@ blueprint:
       icon: mdi:clock-outline
       collapsed: false
       input:
-        start_time:
+        camping_start_time:
           name: Start Time Helper
           description: "Input datetime for automatic climate start time"
           selector:
             entity:
               filter:
                 domain: input_datetime
-        end_time:
+        camping_end_time:
           name: End Time Helper
           description: "Input datetime for automatic climate end time"
           selector:
@@ -128,7 +128,7 @@ blueprint:
             entity:
               filter:
                 domain: input_number
-        delay_minutes:
+        restart_delay:
           name: Delay Minutes
           description: "Input number for restart delay in minutes"
           selector:
@@ -143,7 +143,7 @@ blueprint:
       icon: mdi:timer-outline
       collapsed: true
       input:
-        delay_timer:
+        camping_delay_timer:
           name: Delay Timer
           description: "Timer helper for camping mode delay control"
           selector:
@@ -153,10 +153,10 @@ blueprint:
 
 triggers:
   - trigger: time
-    at: !input start_time
+    at: !input camping_start_time
     id: timeStart
   - trigger: time
-    at: !input end_time
+    at: !input camping_end_time
     id: timeEnd
   - trigger: state
     entity_id:
@@ -171,7 +171,7 @@ triggers:
   - trigger: event
     event_type: timer.finished
     event_data:
-      entity_id: !input delay_timer
+      entity_id: !input camping_delay_timer
     id: timerFinished
 
 conditions: []
@@ -226,7 +226,7 @@ actions:
             metadata: {}
             data: {}
             target:
-              entity_id: !input delay_timer
+              entity_id: !input camping_delay_timer
 
       # Battery level trigger - turn off when battery is low
       - conditions:
@@ -253,7 +253,7 @@ actions:
             metadata: {}
             data: {}
             target:
-              entity_id: !input delay_timer
+              entity_id: !input camping_delay_timer
           - type: turn_off
             device_id: !input climate_device_id
             entity_id: !input climate_entity_id
@@ -275,9 +275,9 @@ actions:
           - action: timer.start
             metadata: {}
             data:
-              duration: "{{ states(delay_minutes) | int(0) * 60 }}"
+              duration: "{{ states(restart_delay) | int(0) * 60 }}"
             target:
-              entity_id: !input delay_timer
+              entity_id: !input camping_delay_timer
 
       # Timer finished - restart climate if conditions are still met
       - conditions:
